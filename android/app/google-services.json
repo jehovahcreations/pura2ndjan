@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "675868454578",
+    "project_id": "pura-e2f24",
+    "storage_bucket": "pura-e2f24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675868454578:android:a5eea44c85e1bb26d863ab",
+        "android_client_info": {
+          "package_name": "com.sjm.app.pura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675868454578-bdg99932k5nj5f1grt0bofa43k2a9ufi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeLDlT6bAEZNWNqoWfZzj-kbkA-unhiTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675868454578-bdg99932k5nj5f1grt0bofa43k2a9ufi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
