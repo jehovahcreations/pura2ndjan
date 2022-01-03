@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:pura/DashBoard.dart';
 import 'package:pura/Payment.dart';
+import 'package:pura/UserData.dart';
 import 'package:pura/dash.dart';
 import 'package:pura/idcard.dart';
 import 'package:pura/learn.dart';
@@ -9,6 +10,7 @@ import 'package:pura/mainmenu.dart';
 import 'package:pura/profile.dart';
 import 'package:pura/team.dart';
 import 'package:pura/view.dart';
+import 'package:pura/webview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Details.dart';
 import 'offer.dart';
@@ -96,10 +98,11 @@ _index ==4?Profile():
 _index ==5?Paan(title: widget.title,param:widget.param):
 _index==6?Details(title: 'Banking Jobs',param:widget.param):
 _index==7?View(param:widget.param):
-_index==8?Payment(param:widget.param, title:widget.title,):
-
+_index==8?UserData(param:widget.param, title:widget.title,):
+_index == 9? Payment(param: widget.param,title: widget.title,):
 _index==10?Idcard():
-_index==11?Offer():Text('77')
+_index==11?Offer():
+_index == 12? Webview(param: widget.param,title: widget.title,): Text('77')
             
         
           ],

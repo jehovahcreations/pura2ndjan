@@ -56,7 +56,7 @@ Future<void> share() async {
     setState(() {
       isLoading = true;
     });
-    print(clickid);
+    //print(clickid);
     await db.open();
 var coll = db.collection('banks');
 var res = await coll.findOne({"_id":clickid});
@@ -67,17 +67,17 @@ if(res==null){
     statusD = res['status'];
     isLoading = false;
   });
-  print(statusD);
+  //print(statusD);
 }
 await db.close();
 
 }
  _nextpage()async{
-   print(clickid);
+   //print(clickid);
    await db.open();
    var coll = db.collection('banks');
    var v1 = await coll.findOne({"_id":clickid});
-   print(v1);
+   //print(v1);
    if(v1 == null){}else{
   v1["result"] = _dataval.text;
   v1["status"] = 2;
@@ -116,7 +116,7 @@ await db.close();
       // isLoading = false;
      });
     
-   // print(res);
+   // //print(res);
    }
    var coll1 = db.collection('product_details');
    var res1 =await coll1.findOne({'menuID':'paan','isActive':1});
@@ -131,7 +131,7 @@ await db.close();
        //isLoading = false;
      });
     
-   // print(specifications);
+   // //print(specifications);
    }
     var coll2 = db.collection('p_executes');
    var res2 =await coll2.findOne({'menuID':'paan','isActive':1});
@@ -145,7 +145,7 @@ await db.close();
       // isLoading = false;
      });
     
-   // print(specifications);
+   // //print(specifications);
    }
 
     var coll3 = db.collection('shares');
@@ -158,7 +158,7 @@ await db.close();
       // isLoading = false;
      });
     
-  //  print(specifications);
+  //  //print(specifications);
    }
     var coll4 = db.collection('banks');
    var res4 =await coll4.find({'subMenu':'paan','user':sp.getString('phone')}).toList();
@@ -171,7 +171,7 @@ await db.close();
      });
     await db.close();
 
-   // print(specifications);
+   // //print(specifications);
    }
   }
   _blablaState() {
@@ -617,7 +617,7 @@ await db.close();
            });
          }else{
          if(worki[Index]['status'] ==1){
-          // print(worki[Index]['status']);
+          // //print(worki[Index]['status']);
           setState(() {
              _index = 9;
            clickid = worki[Index]['_id'];
@@ -909,7 +909,7 @@ await db.close();
              color: Colors.teal,
              
              onPressed: (){
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Dashboard(title: 'pann',pageIndex: 8,param:amount)));
+               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Dashboard(title: 'paan',pageIndex: 8,param:amount)));
              },
            child: Padding(
              padding: const EdgeInsets.all(8.0),

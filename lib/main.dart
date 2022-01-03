@@ -1,6 +1,7 @@
 // @dart =2.9
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pura/Payment.dart';
 import 'package:pura/Proof.dart';
 import 'package:pura/logboard.dart';
 import 'package:pura/screen.dart';
