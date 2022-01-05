@@ -27,6 +27,7 @@ class _PaymentState extends State<Payment> {
   String website = "DEFAULT";
   bool testing = false;
   String? status;
+  bool isLoading = false;
 
   //Testing
   // String mid = "TEST_MID_HERE";
@@ -47,36 +48,38 @@ class _PaymentState extends State<Payment> {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(top: 50.0, bottom: 20, left: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Make Payment',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 28, color: Colors.teal),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Make payment of Rs.150 to continue ...',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+        child: isLoading == true
+            ? CircularProgressIndicator.adaptive()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Make Payment',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 28, color: Colors.teal),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Make payment of Rs.150 to continue ...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
 
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // payment_response != null
-            //     ? //Text('Response: $payment_response\n')
-            //     : Container(),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  // payment_response != null
+                  //     ? //Text('Response: $payment_response\n')
+                  //     : Container(),
 //                loading
 //                    ? Center(
 //                        child: Container(
@@ -85,151 +88,152 @@ class _PaymentState extends State<Payment> {
 //                            child: CircularProgressIndicator()),
 //                      )
 //                    : Container(),
-            RaisedButton(
-              onPressed: () {
-                //Firstly Generate CheckSum bcoz Paytm Require this
-                generateTxnToken(0);
-              },
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50,
-                        child:
-                            Image.asset('assets/logo/1657936.png', height: 50)),
-                    Text(
-                      "Pay using Wallet",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold),
+                  RaisedButton(
+                    onPressed: () {
+                      //Firstly Generate CheckSum bcoz Paytm Require this
+                      generateTxnToken(0);
+                    },
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 50,
+                              child: Image.asset('assets/logo/1657936.png',
+                                  height: 50)),
+                          Text(
+                            "Pay using Wallet",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
                     ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RaisedButton(
-              onPressed: () {
-                //Firstly Generate CheckSum bcoz Paytm Require this
-                generateTxnToken(1);
-              },
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50,
-                        child: Image.asset(
-                            'assets/logo/12-Reach-NetBanking.png',
-                            height: 50)),
-                    Text(
-                      "Pay using Net Banking",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      //Firstly Generate CheckSum bcoz Paytm Require this
+                      generateTxnToken(1);
+                    },
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 50,
+                              child: Image.asset(
+                                  'assets/logo/12-Reach-NetBanking.png',
+                                  height: 50)),
+                          Text(
+                            "Pay using Net Banking",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
                     ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RaisedButton(
-              onPressed: () {
-                //Firstly Generate CheckSum bcoz Paytm Require this
-                generateTxnToken(2);
-              },
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50,
-                        child:
-                            Image.asset('assets/logo/UPI1.jpeg', height: 50)),
-                    Text(
-                      "UPI",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      //Firstly Generate CheckSum bcoz Paytm Require this
+                      generateTxnToken(2);
+                    },
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 50,
+                              child: Image.asset('assets/logo/UPI1.jpeg',
+                                  height: 50)),
+                          Text(
+                            "UPI",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
                     ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RaisedButton(
-              onPressed: () {
-                //Firstly Generate CheckSum bcoz Paytm Require this
-                generateTxnToken(3);
-              },
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50,
-                        child: Image.asset(
-                            'assets/logo/bank_card_logo__7_4x.jpeg',
-                            height: 50)),
-                    Text(
-                      "Credit Card",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.teal,
-                          fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      //Firstly Generate CheckSum bcoz Paytm Require this
+                      generateTxnToken(3);
+                    },
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 50,
+                              child: Image.asset(
+                                  'assets/logo/bank_card_logo__7_4x.jpeg',
+                                  height: 50)),
+                          Text(
+                            "Credit Card",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
                     ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
+                  ),
+                  Text(status ?? '')
+                ],
               ),
-            ),
-            Text(status ?? '')
-          ],
-        ),
       ),
     );
   }
 
   void generateTxnToken(int mode) async {
+    print('benet${widget.param}');
     setState(() {
-      loading = true;
+      isLoading = true;
     });
     String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -280,73 +284,98 @@ class _PaymentState extends State<Payment> {
           appInvokeEnabled: false);
 
       paytmResponse.then((value) async {
-        print(value);
+        //print(value);
         setState(() {
           loading = false;
         });
+
         print("Value is ");
         print(value);
         if (value['error']) {
-          payment_response = value['errorMessage'];
-          print(payment_response);
+          // payment_response = value['errorMessage'];
+          //  print(payment_response);
           setState(() {
-            status = value['response']['STATUS'];
+            // status = value['response']['STATUS'];
           });
           await db.open();
-          var coll = db.collection('bank');
+          var coll = db.collection('banks');
           var v1 = await coll.findOne({"phone": widget.param});
+          print('v1${v1}');
           if (v1 == null) {
           } else {
-            v1["ORDERID"] = value['response']['ORDERID'];
-            v1["RESPCODE"] = value['response']['RESPCODE'];
-            v1["RESPMSG"] = value['response']['RESPMSG'];
-            v1["STATUS"] = value['response']['STATUS'];
-            v1["TXNAMOUNT"] = value['response']['TXNAMOUNT'];
-            v1["TXNID"] = value['response']['TXNID'];
+            v1["ORDERID"] = value['response']['ORDERID'].toString();
+            v1["RESPCODE"] = value['response']['RESPCODE'].toString();
+            v1["RESPMSG"] = value['response']['RESPMSG'].toString();
+            v1["STATUS"] = value['response']['STATUS'].toString();
+            v1["TXNAMOUNT"] = value['response']['TXNAMOUNT'].toString();
+            v1["TXNID"] = value['response']['TXNID'].toString();
             await coll.save(v1);
+            setState(() {
+              isLoading = false;
+            });
           }
         } else {
           if (value['response'] != null) {
-            payment_response = value['response']['STATUS'];
-            print(payment_response);
+            // payment_response = value['response']['STATUS'];
+            // print(payment_response);
             await db.open();
-            var coll = db.collection('bank');
-            var v1 = await coll.findOne({"phone": widget.param});
+            var coll = db.collection('banks');
+            var v1 = await coll.findOne({"phone": widget.param.toString()});
+
             if (v1 == null) {
             } else {
-              if (value['response']['STATUS'] == 'TXN_SUCCESS') {
-                v1["ORDERID"] = value['response']['ORDERID'];
-                v1["RESPCODE"] = value['response']['RESPCODE'];
-                v1["RESPMSG"] = value['response']['RESPMSG'];
-                v1["STATUS"] = value['response']['STATUS'];
-                v1["TXNAMOUNT"] = value['response']['TXNAMOUNT'];
-                v1["TXNID"] = value['response']['TXNID'];
-                await coll.save(v1);
-                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Dashboard(
-                        title: widget.title,
-                        pageIndex: 12,
-                        param: '_phone.text.toString()')));
-              } else {
-                v1["ORDERID"] = value['response']['ORDERID'];
-                v1["RESPCODE"] = value['response']['RESPCODE'];
-                v1["RESPMSG"] = value['response']['RESPMSG'];
-                v1["STATUS"] = value['response']['STATUS'];
-                v1["TXNAMOUNT"] = value['response']['TXNAMOUNT'];
-                v1["TXNID"] = value['response']['TXNID'];
+              print('pattu');
+
+              if (value['response'].containsKey('body')) {
+                var json = jsonDecode(value['response']['body']);
+                print(json);
+                print('v3${v1}');
+                v1["ORDERID"] = json['txnInfo']['ORDERID'].toString();
+                v1["RESPCODE"] = json['txnInfo']['RESPCODE'].toString();
+                v1["RESPMSG"] = json['txnInfo']['RESPMSG'].toString();
+                v1["STATUS"] = json['txnInfo']['STATUS'].toString();
+                v1["TXNAMOUNT"] = json['txnInfo']['TXNAMOUNT'].toString();
+                v1["TXNID"] = json['txnInfo']['TXNID'].toString();
                 await coll.save(v1);
                 setState(() {
+                  isLoading = false;
                   payment_response = 'Failed';
                 });
+                // print('v2${v1}');
+
+              } else {
+                print('ststus');
+                print(value['response']['STATUS']);
+                if (value['response']['STATUS'] == 'TXN_SUCCESS') {
+                  v1["ORDERID"] = value['response']['ORDERID'].toString();
+                  v1["RESPCODE"] = value['response']['RESPCODE'].toString();
+                  v1["RESPMSG"] = value['response']['RESPMSG'].toString();
+                  v1["STATUS"] = value['response']['STATUS'].toString();
+                  v1["TXNAMOUNT"] = value['response']['TXNAMOUNT'].toString();
+                  v1["TXNID"] = value['response']['TXNID'].toString();
+                  await coll.save(v1);
+                  setState(() {
+                    isLoading = false;
+                  });
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Dashboard(
+                          title: widget.title,
+                          pageIndex: 12,
+                          param: widget.param)));
+                }
               }
             }
           }
+          setState(() {
+            isLoading = false;
+          });
           payment_response = "\n" + value.toString();
-          print(payment_response);
+          // print(payment_response);
         }
       });
     } catch (e) {
       print(e);
+      print('kusu');
     }
   }
 }

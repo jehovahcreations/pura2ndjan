@@ -76,7 +76,9 @@ dependencies:
   swipe_image_gallery: ^0.0.4
   percent_indicator: ^3.4.0
   http: ^0.13.4
+  webview_flutter_max: ^1.0.7 
   paytm:
+  
 
 flutter_icons:
   android: "launcher_icon"
