@@ -2,12 +2,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:pura/DashBoard.dart';
 import 'package:pura/Payment.dart';
 import 'package:pura/Proof.dart';
 import 'package:pura/logboard.dart';
 import 'package:pura/screen.dart';
 import 'package:pura/terms.dart';
 import 'package:pura/webview.dart';
+
+import 'loandoc.dart';
 
 void main()async {
    WidgetsFlutterBinding.ensureInitialized();
@@ -37,8 +40,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         
       ),
-      home: WebV(title:"paan",param:"090909"),
-      //Screen(),
+      home: //Dashboard(title:"ploan",param:"67890",pageIndex:17),
+      Screen(),
     );
   }
 }

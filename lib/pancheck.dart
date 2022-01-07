@@ -2,13 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:webview_flutter_max/platform_interface.dart';
+import 'package:webview_flutter_max/webview_flutter.dart';
+
 import 'package:pura/DashBoard.dart';
 import 'package:pura/constant.dart';
 import 'package:pura/paan.dart';
-import 'package:webview_flutter_max/platform_interface.dart';
-import 'package:webview_flutter_max/webview_flutter.dart';
-import 'package:screenshot/screenshot.dart';
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -25,16 +27,20 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 
-class WebV extends StatefulWidget {
+class PanV extends StatefulWidget {
   String title;
   String param;
-  WebV({Key? key, required this.title, required this.param}) : super(key: key);
+  PanV({
+    Key? key,
+    required this.title,
+    required this.param,
+  }) : super(key: key);
 
   @override
-  _WebVState createState() => _WebVState();
+  _PanVState createState() => _PanVState();
 }
 
-class _WebVState extends State<WebV> {
+class _PanVState extends State<PanV> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   String? submenu;
@@ -43,8 +49,6 @@ class _WebVState extends State<WebV> {
     super.initState();
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
-
-  
 
   late Uint8List screenshotBytes;
   ScreenshotController screenshotController = ScreenshotController();
@@ -57,7 +61,7 @@ class _WebVState extends State<WebV> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pan Card'),
+        title: const Text('Check Credit Score'),
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
         actions: <Widget>[
           NavigationControls(_controller.future),
@@ -73,7 +77,7 @@ class _WebVState extends State<WebV> {
               child: Builder(builder: (BuildContext context) {
                 return WebView(
                   initialUrl:
-                      'https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan/getNewEpan',
+                      'https://consumer.experian.in/ECV-OLN/signIn?utm_source=exp_hp&utm_medium=FCRbutton&utm_campaign=FCR_web&_ga=2.251661449.1242189558.1641408380-1677272481.1641408380',
                   javascriptMode: JavascriptMode.unrestricted,
                   onWebViewCreated: (WebViewController webViewController) {
                     // webView = webViewController;
@@ -137,15 +141,15 @@ class _WebVState extends State<WebV> {
                         TextFormField(
                           controller: _ref,
                           decoration: InputDecoration(
-                              labelText: "Enter Ref.No",
-                              hintText: "Enter Ref No"),
+                              labelText: "Enter Credit Score",
+                              hintText: "Enter Credit Score"),
                         ),
-                        TextFormField(
-                          controller: _aadhar,
-                          decoration: InputDecoration(
-                              labelText: "Enter Aadhar Number",
-                              hintText: "Aadhar Number"),
-                        ),
+                        // TextFormField(
+                        //   controller: _aadhar,
+                        //   decoration: InputDecoration(
+                        //       labelText: "Enter Aadhar Number",
+                        //       hintText: "Aadhar Number"),
+                        // ),
                         SizedBox(
                           height: 40,
                         ),
@@ -157,18 +161,18 @@ class _WebVState extends State<WebV> {
                             await db.open();
                             var coll = db.collection('banks');
                             var v1 = await coll.findOne({
-                              "phone": widget.param.toString(),
+                              "phone": widget.param,
                               "subMenu": widget.title
                             });
-                            v1!["refNo"] = _ref.text;
-                            v1["aadhar"] = _aadhar.text;
-                            v1["Done"] = "Completed";
+                            v1!["credit"] = _ref.text;
+                            
+                            
                             await coll.save(v1);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Dashboard(
-                                    title: 'title',
-                                    pageIndex: 1,
-                                    param: 'param')));
+                                    title: widget.title,
+                                    pageIndex: 15,
+                                    param: widget.param)));
                             setState(() {
                               isLoading = false;
                             });

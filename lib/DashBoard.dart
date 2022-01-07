@@ -14,11 +14,6 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-// class MenuItem {
-//   String title;
-//   IconData icon;
-//   MenuItem(this.icon, this.title);
-// }
 
 class _DashboardState extends State<Dashboard> {
 final _drawerController = ZoomDrawerController();

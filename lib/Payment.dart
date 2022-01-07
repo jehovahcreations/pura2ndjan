@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:paytm/paytm.dart';
 import 'package:pura/constant.dart';
+import 'package:pura/pancheck.dart';
+import 'package:pura/webview.dart';
 
 import 'DashBoard.dart';
 
@@ -357,11 +359,19 @@ class _PaymentState extends State<Payment> {
                   setState(() {
                     isLoading = false;
                   });
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Dashboard(
-                          title: widget.title,
-                          pageIndex: 12,
-                          param: widget.param)));
+                  if (widget.title == 'paan') {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => WebV(
+                            title: widget.title,
+                            
+                            param: widget.param)));
+                  }else{
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PanV(
+                            title: widget.title,
+                            
+                            param: widget.param)));
+                  }
                 }
               }
             }

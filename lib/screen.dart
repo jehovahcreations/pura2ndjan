@@ -15,23 +15,43 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
- @override
-  void initState(){
+  bool isLoading = false;
+  int update = 0;
+  @override
+  void initState() {
     super.initState();
-     shared();
-     
-            
+    shared();
   }
-  shared()async{
+
+  // _update() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   await db.open();
+  //   var coll = db.collection('settings');
+  //   var res = await coll.findOne({"update": 1});
+  //   if (res != null) {
+  //     update = res["update"];
+  //   }
+  //   setState(() {
+  //     isLoading
+  //   });
+  // }
+
+  shared() async {
     sp = await SharedPreferences.getInstance();
     var phone = sp.getString('name');
-    
+
     Timer(
         Duration(seconds: 6),
-        () => phone== null?  Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => Login())):Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => Dashboard(pageIndex: 0,))));
-   // sp.setString('pageindex', '0');
+        () => phone == null
+            ? Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (BuildContext context) => Login()))
+            : Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) => Dashboard(
+                      pageIndex: 0,
+                    ))));
+    // sp.setString('pageindex', '0');
   }
 
   @override
@@ -41,18 +61,30 @@ class _ScreenState extends State<Screen> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children:[ 
-              Image.asset('assets/logo/logo.png',height:500),
-              Shimmer.fromColors(
-                 baseColor: Colors.white,
-                 highlightColor: Colors.grey,
-                 child: Column(
-                   children: [
-                     Text('PURA',style: TextStyle(color: Colors.white, fontSize:130,fontWeight: FontWeight.w700),),
-                     Text('SOCIAL JUSTICE MOVEMENT',style: TextStyle(color: Colors.white, fontSize:25,fontWeight: FontWeight.w700),),
-                   ],
-                 ))
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset('assets/logo/logo.png', height: 500),
+                Shimmer.fromColors(
+                    baseColor: Colors.white,
+                    highlightColor: Colors.grey,
+                    child: Column(
+                      children: [
+                        Text(
+                          'PURA',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 130,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          'SOCIAL JUSTICE MOVEMENT',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ))
               ]),
         ),
       ),

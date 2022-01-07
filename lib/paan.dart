@@ -609,24 +609,17 @@ await db.close();
        padding: const EdgeInsets.all(8.0),
        child: InkWell(
          onTap: (){
-         if(worki[Index]['status'] !=1){
-           setState(() {
-             _index = 6;
-            clickid = worki[Index]['_id'];
-            _statusD();
-           });
-         }else{
-         if(worki[Index]['status'] ==1){
-          // //print(worki[Index]['status']);
+         
+         
           setState(() {
-             _index = 9;
+             _index = 6;
            clickid = worki[Index]['_id'];
           });
           
            //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>View(param:'paan')));
            
-         }
-         }
+         
+         
          },
          child: Container(
            child: Card(

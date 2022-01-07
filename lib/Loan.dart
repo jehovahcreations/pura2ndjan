@@ -1,34 +1,29 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:metro_appbar/metro_appbar.dart';
 import 'package:flutter_share/flutter_share.dart';
-//import 'package:mongo_dart/mongo_dart.dart';
-import 'constant.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
-import 'package:status_change/status_change.dart';
 
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:async/async.dart';
-
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:pura/DashBoard.dart';
+import 'package:pura/HomeScreen.dart';
+import 'package:pura/constant.dart';
 
-import 'package:pura/dash.dart';
+import 'Payment.dart';
 
-class View extends StatefulWidget {
-  final param;
-  View({Key? key, this.param}) : super(key: key);
+class Loan extends StatefulWidget {
+  String title;
+  String param;
+  Loan({
+    Key? key,
+    required this.title,
+    required this.param,
+  }) : super(key: key);
 
   @override
-  _ViewState createState() => _ViewState();
+  _LoanState createState() => _LoanState();
 }
 
-class _ViewState extends State<View> {
+class _LoanState extends State<Loan> {
   late Timer _timer;
   int _index = 0;
   String? _status;
@@ -47,23 +42,12 @@ class _ViewState extends State<View> {
   String? videoo;
   int? statusD;
   bool _enabled = false;
-  // var clickid;
-  bool isloaded = false;
-  var result1;
+  String? amount;
+
   List<dynamic> video = [];
   List<dynamic> worki = [];
-  TextEditingController _refNum = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _pass = TextEditingController();
-  TextEditingController _aadhar = TextEditingController();
-  TextEditingController _pan = TextEditingController();
+  TextEditingController _dataval = TextEditingController();
   ScrollController _controller = new ScrollController();
-  File? _image;
-  final picker = ImagePicker();
-  bool ref = false;
-  bool afront = false;
-  bool aback = false;
-  bool pfront = false;
 
   Future<void> share() async {
     await FlutterShare.share(
@@ -73,213 +57,11 @@ class _ViewState extends State<View> {
         chooserTitle: 'PURA');
   }
 
-  Future<void> getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  upload(File imageFile) async {
-    // open a bytestream
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    // get file length
-    var length = await imageFile.length();
-
-    // string to uri
-    var uri = Uri.parse(imgserver + "upload10");
-
-    // create multipart request
-    var request = new http.MultipartRequest("POST", uri);
-
-    // multipart that takes file
-    var multipartFile = new http.MultipartFile('myFile', stream, length,
-        filename: basename(imageFile.path));
-
-    // add file to multipart
-    request.files.add(multipartFile);
-    request.fields['phone'] = clickid!.toHexString();
-
-    // send
-    var response = await request.send();
-    // print(response);
-    // if (response.statusCode == 200) {
-    //   setState(() {
-    //     //imgstatus = true;
-    //   });
-    // }
-    await db.open();
-    var coll = db.collection('banks');
-    var res = await coll.findOne({"_id": clickid});
-    // print(res);
-    if (res != null) {
-      print('res');
-      print(res);
-
-      setState(() {
-        afront = true;
-        isloaded = false;
-        result1 = res;
-      });
-      // print(result1);
-    }
-
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      // print(value);
-    });
-  }
-
-  upload1(File imageFile) async {
-    // open a bytestream
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    // get file length
-    var length = await imageFile.length();
-
-    // string to uri
-    var uri = Uri.parse(imgserver + "upload11");
-
-    // create multipart request
-    var request = new http.MultipartRequest("POST", uri);
-
-    // multipart that takes file
-    var multipartFile = new http.MultipartFile('myFile', stream, length,
-        filename: basename(imageFile.path));
-
-    // add file to multipart
-    request.files.add(multipartFile);
-    request.fields['phone'] = clickid!.toHexString();
-
-    // send
-    var response = await request.send();
-    // print(response.statusCode);
-    await db.open();
-    var coll = db.collection('banks');
-    var res = await coll.findOne({"_id": clickid});
-    // print(res);
-    if (res != null) {
-      print('res');
-      print(res);
-
-      setState(() {
-        aback = true;
-        isloaded = false;
-        result1 = res;
-      });
-      // print(result1);
-    }
-
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
-
-  upload2(File imageFile) async {
-    // open a bytestream
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    // get file length
-    var length = await imageFile.length();
-
-    // string to uri
-    var uri = Uri.parse(imgserver + "upload12");
-
-    // create multipart request
-    var request = new http.MultipartRequest("POST", uri);
-
-    // multipart that takes file
-    var multipartFile = new http.MultipartFile('myFile', stream, length,
-        filename: basename(imageFile.path));
-
-    // add file to multipart
-    request.files.add(multipartFile);
-    request.fields['phone'] = clickid!.toHexString();
-
-    // send
-    var response = await request.send();
-    // print(response.statusCode);
-    await db.open();
-    var coll = db.collection('banks');
-    var res = await coll.findOne({"_id": clickid});
-    // print(res);
-    if (res != null) {
-      print('res');
-      print(res);
-
-      setState(() {
-        pfront = true;
-        isloaded = false;
-        result1 = res;
-      });
-      // print(result1);
-    }
-
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-    // fetch1();
-  }
-
-  upload9(File imageFile) async {
-    // open a bytestream
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    // get file length
-    var length = await imageFile.length();
-
-    // string to uri
-    var uri = Uri.parse(imgserver + "upload9");
-
-    // create multipart request
-    var request = new http.MultipartRequest("POST", uri);
-
-    // multipart that takes file
-    var multipartFile = new http.MultipartFile('myFile', stream, length,
-        filename: basename(imageFile.path));
-
-    // add file to multipart
-    request.files.add(multipartFile);
-    request.fields['phone'] = clickid!.toHexString();
-
-    // send
-    var response = await request.send();
-    //print(response.statusCode);
-    await db.open();
-    var coll = db.collection('banks');
-    var res = await coll.findOne({"_id": clickid});
-    // print(res);
-    if (res != null) {
-      print('res');
-      print(res);
-
-      setState(() {
-        ref = true;
-        isloaded = false;
-        result1 = res;
-      });
-      // print(result1);
-    }
-
-    // listen for response
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
-
   _statusD() async {
     setState(() {
       isLoading = true;
     });
-    print(clickid);
+    //print(clickid);
     await db.open();
     var coll = db.collection('banks');
     var res = await coll.findOne({"_id": clickid});
@@ -290,33 +72,24 @@ class _ViewState extends State<View> {
         statusD = res['status'];
         isLoading = false;
       });
-      print(statusD);
+      //print(statusD);
     }
     await db.close();
   }
 
   _nextpage() async {
-    setState(() {
-      isLoading = true;
-    });
-    print(clickid);
+    //print(clickid);
     await db.open();
     var coll = db.collection('banks');
     var v1 = await coll.findOne({"_id": clickid});
-    print(v1);
+    //print(v1);
     if (v1 == null) {
     } else {
-      v1["refNum"] = _refNum.text;
-      v1["email"] = _email.text;
-      v1["aadhar"] = _aadhar.text;
-      v1["pass"] = _pass.text;
-      v1["pan"] = _pan.text;
+      v1["result"] = _dataval.text;
       v1["status"] = 2;
       await coll.save(v1);
-      print(v1);
       //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>View()));
       setState(() {
-        isLoading = false;
         _index = 3;
       });
       _menuFetch();
@@ -336,10 +109,11 @@ class _ViewState extends State<View> {
         point = res['points'];
         url = res['url'];
         dataval = res['data'];
+        amount = res['amount'];
         // isLoading = false;
       });
 
-      // print(res);
+      // //print(res);
     }
     var coll1 = db.collection('product_details');
     var res1 = await coll1.findOne({'menuID': widget.param, 'isActive': 1});
@@ -354,7 +128,7 @@ class _ViewState extends State<View> {
         //isLoading = false;
       });
 
-      // print(specifications);
+      // //print(specifications);
     }
     var coll2 = db.collection('p_executes');
     var res2 = await coll2.findOne({'menuID': widget.param, 'isActive': 1});
@@ -368,12 +142,11 @@ class _ViewState extends State<View> {
         // isLoading = false;
       });
 
-      // print(specifications);
+      // //print(specifications);
     }
 
     var coll3 = db.collection('shares');
-    var res3 =
-        await coll3.find({'menuID': widget.param, 'isActive': 1}).toList();
+    var res3 = await coll3.find({'menuID': widget.param, 'isActive': 1}).toList();
     if (res3 == null) {
       _status = 'No data';
     } else {
@@ -382,11 +155,11 @@ class _ViewState extends State<View> {
         // isLoading = false;
       });
 
-      //  print(specifications);
+      //  //print(specifications);
     }
     var coll4 = db.collection('banks');
-    var res4 = await coll4.find(
-        {'subMenu': widget.param, 'user': sp.getString('phone')}).toList();
+    var res4 = await coll4
+        .find({'subMenu': widget.param, 'user': sp.getString('phone')}).toList();
     if (res4 == null) {
       _status = 'No data';
     } else {
@@ -396,7 +169,7 @@ class _ViewState extends State<View> {
       });
       await db.close();
 
-      // print(specifications);
+      // //print(specifications);
     }
   }
 
@@ -411,33 +184,10 @@ class _ViewState extends State<View> {
     super.initState();
     // _getFirebaseUser();
     _menuFetch();
-    fetch1();
-  }
-
-  fetch1() async {
-    setState(() {
-      isLoading = true;
-    });
-    // print(widget.param);
-    //print(widget.title);
-    await db.open();
-    var coll = db.collection('banks');
-    var res = await coll.findOne({"_id": clickid});
-    // print(res);
-    if (res != null) {
-      print('res');
-      print(res);
-      result1 = res;
-      // print(result1['aadharback']);
-    }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    //RR fetch1();
     return isLoading == true
         ? CircularProgressIndicator(
             color: Colors.teal,
@@ -445,6 +195,7 @@ class _ViewState extends State<View> {
         : Padding(
             padding: EdgeInsets.all(20),
             child: Column(
+            
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -997,28 +748,12 @@ class _ViewState extends State<View> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: InkWell(
                                               onTap: () {
-                                                if (worki[Index]['status'] !=
-                                                    1) {
-                                                  setState(() {
-                                                    _index = 6;
-                                                    clickid =
-                                                        worki[Index]['_id'];
-                                                    _statusD();
-                                                  });
-                                                } else {
-                                                  if (worki[Index]['status'] ==
-                                                      1) {
-                                                    // print(worki[Index]['status']);
-                                                    setState(() {
-                                                      _index = 9;
-                                                      clickid =
-                                                          worki[Index]['_id'];
-                                                    });
+                                                setState(() {
+                                                  _index = 6;
+                                                  clickid = worki[Index]['_id'];
+                                                });
 
-                                                    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>View(param:widget.param)));
-
-                                                  }
-                                                }
+                                                //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>View(param:'paan')));
                                               },
                                               child: Container(
                                                 child: Card(
@@ -1195,279 +930,20 @@ class _ViewState extends State<View> {
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
+                                                Text('Enter ${dataval}',
+                                                    style: TextStyle(
+                                                        color: Colors.teal,
+                                                        fontSize: 20)),
                                                 SizedBox(
-                                                  height: 40,
+                                                  height: 30,
                                                 ),
                                                 TextFormField(
-                                                  controller: _refNum,
+                                                  controller: _dataval,
                                                   decoration: InputDecoration(
                                                     hintText:
-                                                        'Enter Reference Number',
+                                                        'Enter ${dataval}',
                                                     labelText:
-                                                        'Enter Reference Number',
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _email,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'Enter Email',
-                                                    labelText: 'Enter Email',
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _pass,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'Enter Password',
-                                                    labelText: 'Enter Password',
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _aadhar,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Enter Aadhar Number',
-                                                    labelText:
-                                                        'Enter Aadhar Number',
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: _pan,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Enter Pan Number',
-                                                    labelText:
-                                                        'Enter Pan Number',
-                                                  ),
-                                                ),
-
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  'Upload Adhard Card Front',
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 5,
-                                                          color: Colors.teal),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Column(
-                                                    children: [
-                                                      //Text("Select an image"),
-                                                      FlatButton.icon(
-                                                          onPressed: () async =>
-                                                              await getImage(),
-                                                          icon: Icon(Icons
-                                                              .upload_file),
-                                                          label:
-                                                              Text("Browse")),
-
-                                                      FlatButton.icon(
-                                                          onPressed: () =>
-                                                              upload(_image!),
-                                                          icon: Icon(Icons
-                                                              .upload_rounded),
-                                                          label: Text(
-                                                              "Upload now")),
-                                                      Container(
-                                                        height: 100,
-                                                        width: 80,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: afront == false
-                                                              ? Text('X')
-                                                              : Image.network(
-                                                                  imgserver +
-                                                                      '${result1['aadhar']}',
-                                                                  height: 100,
-                                                                ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  'Upload Adhard Card Back',
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 5,
-                                                          color: Colors.teal),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Column(
-                                                    children: [
-                                                      //Text("Select an image"),
-                                                      FlatButton.icon(
-                                                          onPressed: () async =>
-                                                              await getImage(),
-                                                          icon: Icon(Icons
-                                                              .upload_file),
-                                                          label:
-                                                              Text("Browse")),
-
-                                                      FlatButton.icon(
-                                                          onPressed: () =>
-                                                              upload1(_image!),
-                                                          icon: Icon(Icons
-                                                              .upload_rounded),
-                                                          label: Text(
-                                                              "Upload now")),
-                                                      Container(
-                                                        height: 100,
-                                                        width: 80,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: aback == false
-                                                              ? Text('X')
-                                                              : Image.network(
-                                                                  imgserver +
-                                                                      '${result1['aadharback']}',
-                                                                  height: 100,
-                                                                ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  'Upload Pan Card',
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 5,
-                                                          color: Colors.teal),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Column(
-                                                    children: [
-                                                      //Text("Select an image"),
-                                                      FlatButton.icon(
-                                                          onPressed: () async =>
-                                                              await getImage(),
-                                                          icon: Icon(Icons
-                                                              .upload_file),
-                                                          label:
-                                                              Text("Browse")),
-
-                                                      FlatButton.icon(
-                                                          onPressed: () =>
-                                                              upload2(_image!),
-                                                          icon: Icon(Icons
-                                                              .upload_rounded),
-                                                          label: Text(
-                                                              "Upload now")),
-                                                      Container(
-                                                        height: 100,
-                                                        width: 80,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: pfront == false
-                                                              ? Text('X')
-                                                              : Image.network(
-                                                                  imgserver +
-                                                                      '${result1['pan']}',
-                                                                  height: 100,
-                                                                ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                // Text('Enter Reference Number',
-                                                //     style: TextStyle(
-                                                //         color: Colors.teal,
-                                                //         fontSize: 20)),
-                                                // SizedBox(
-                                                //   height: 30,
-                                                // ),
-
-                                                Text(
-                                                  'Upload Screen Shot',
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 5,
-                                                          color: Colors.teal),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Column(
-                                                    children: [
-                                                      //Text("Select an image"),
-                                                      FlatButton.icon(
-                                                          onPressed: () async =>
-                                                              await getImage(),
-                                                          icon: Icon(Icons
-                                                              .upload_file),
-                                                          label:
-                                                              Text("Browse")),
-
-                                                      FlatButton.icon(
-                                                          onPressed: () =>
-                                                              upload9(_image!),
-                                                          icon: Icon(Icons
-                                                              .upload_rounded),
-                                                          label: Text(
-                                                              "Upload now")),
-                                                      Container(
-                                                        height: 100,
-                                                        width: 80,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: ref == false
-                                                              ? Text(
-                                                                  'X',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .red),
-                                                                )
-                                                              : Image.network(
-                                                                  imgserver +
-                                                                      '${result1['refimg']}',
-                                                                  height: 100,
-                                                                ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                        'Enter ${dataval}',
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -1736,12 +1212,14 @@ class _ViewState extends State<View> {
                   child: RaisedButton(
                     color: Colors.teal,
                     onPressed: () {
-                      share();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Dashboard(
+                              title: widget.param, pageIndex: 8, param: amount)));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'SHARE LINK',
+                        'Apply Personal Loan',
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),

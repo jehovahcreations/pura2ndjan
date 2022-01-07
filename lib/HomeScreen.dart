@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:pura/DashBoard.dart';
+import 'package:pura/Loan.dart';
 import 'package:pura/Payment.dart';
 import 'package:pura/UserData.dart';
 import 'package:pura/dash.dart';
+import 'package:pura/email.dart';
 import 'package:pura/idcard.dart';
 import 'package:pura/learn.dart';
+import 'package:pura/loandoc.dart';
+import 'package:pura/loandocnon.dart';
 import 'package:pura/mainmenu.dart';
+import 'package:pura/pancheck.dart';
 import 'package:pura/profile.dart';
 import 'package:pura/team.dart';
 import 'package:pura/view.dart';
 import 'package:pura/webview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Details.dart';
+import 'Ploan.dart';
 import 'offer.dart';
 import 'paan.dart';
 import 'src/curved_navigation_bar.dart';
@@ -102,7 +108,14 @@ _index==8?UserData(param:widget.param, title:widget.title,):
 _index == 9? Payment(param: widget.param,title: widget.title,):
 _index==10?Idcard():
 _index==11?Offer():
-//_index == 12? WebV()
+_index == 12? WebV(title: widget.title,param: widget.param,):
+_index == 13? PanV(param: widget.param,title: widget.title, ):
+_index == 14? Loan(param: widget.param, title: widget.title,):
+_index ==15? Ploan(param: widget.param,title: widget.title,):
+_index == 16? Loandoc(param: widget.param,title: widget.title):
+_index == 17? LoanDocNon(param: widget.param, title: widget.title):
+_index == 18? Email():
+                                                                      
  Text('77')
             
         

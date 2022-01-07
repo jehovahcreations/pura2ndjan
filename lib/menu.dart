@@ -121,6 +121,35 @@ class _MenuState extends State<Menu> {
                             ),
                           ),
                         ),
+                        Divider(
+                  color: Colors.white,
+                  height: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 8, bottom: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              Dashboard(title: null, pageIndex: 18)));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.photo,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Email',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
+                      ],
+                    ),
+                  ),
+                ),
                         Divider(color: Colors.white,height: 3,),
                         Padding(
                           padding: const EdgeInsets.only(left: 20,top: 8,bottom: 8),
